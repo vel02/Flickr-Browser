@@ -28,7 +28,7 @@ public interface FlickrDao {
     void updatePhoto(String author_id, String title, String link, String published,
                      String description, String tags, Media media);
 
-    @Query("SELECT * FROM photos WHERE tags = :query ORDER BY published")
+    @Query("SELECT * FROM photos WHERE tags LIKE '%'|| :query || '%' ORDER BY published")
     LiveData<List<Photo>> searchPhoto(String query);
 
 }

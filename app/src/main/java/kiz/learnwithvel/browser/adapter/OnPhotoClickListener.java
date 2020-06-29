@@ -1,7 +1,11 @@
 package kiz.learnwithvel.browser.adapter;
 
+import kiz.learnwithvel.browser.model.Photo;
+
 public interface OnPhotoClickListener {
 
-    void onClick(int position);
+    void onClickPhoto(Photo photo);
+
+    void onClickCategory(String query);
 
 }

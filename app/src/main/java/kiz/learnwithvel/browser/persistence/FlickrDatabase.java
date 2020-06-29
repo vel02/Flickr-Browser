@@ -27,4 +27,6 @@ public abstract class FlickrDatabase extends RoomDatabase {
         return instance;
     }
 
+    public abstract FlickrDao getFlickrDao();
+
 }

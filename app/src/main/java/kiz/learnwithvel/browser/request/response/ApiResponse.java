@@ -1,13 +1,14 @@
 package kiz.learnwithvel.browser.request.response;
 
 import java.io.IOException;
+import java.util.Objects;
 
 import retrofit2.Response;
 
 public class ApiResponse<T> {
 
     public ApiResponse<T> create(Throwable error) {
-        return new ApiErrorResponse<>(!error.getMessage().equals("") ? error.getMessage()
+        return new ApiErrorResponse<>(!Objects.equals(error.getMessage(), "") ? error.getMessage()
                 : "Unknown Error\nCheck network connection");
     }
 

@@ -1,6 +1,9 @@
 package kiz.learnwithvel.browser.model;
 
-public class Media {
+import android.os.Parcel;
+import android.os.Parcelable;
+
+public class Media implements Parcelable {
 
     private String m;
 
@@ -10,6 +13,32 @@ public class Media {
 
     public Media() {
     }
+
+    protected Media(Parcel in) {
+        m = in.readString();
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(m);
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    public static final Creator<Media> CREATOR = new Creator<Media>() {
+        @Override
+        public Media createFromParcel(Parcel in) {
+            return new Media(in);
+        }
+
+        @Override
+        public Media[] newArray(int size) {
+            return new Media[size];
+        }
+    };
 
     @Override
     public String toString() {

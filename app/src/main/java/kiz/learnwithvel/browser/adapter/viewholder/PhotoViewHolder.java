@@ -7,8 +7,8 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.core.content.res.ResourcesCompat;
 
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.request.RequestOptions;
+import com.bumptech.glide.RequestManager;
+import com.bumptech.glide.util.ViewPreloadSizeProvider;
 
 import java.text.ParseException;
 
@@ -24,10 +24,17 @@ public class PhotoViewHolder extends BaseViewHolder implements View.OnClickListe
     private TextView published;
 
     private final OnPhotoClickListener listener;
+    private final RequestManager manager;
+    private final ViewPreloadSizeProvider<String> preload;
+    private Photo photo;
 
-    public PhotoViewHolder(@NonNull View itemView, final OnPhotoClickListener listener) {
+    public PhotoViewHolder(@NonNull View itemView, final OnPhotoClickListener listener,
+                           final RequestManager manager,
+                           final ViewPreloadSizeProvider<String> preload) {
         super(itemView);
         this.listener = listener;
+        this.manager = manager;
+        this.preload = preload;
         this.image = itemView.findViewById(R.id.item_photo_image);
         this.title = itemView.findViewById(R.id.item_photo_title);
         this.published = itemView.findViewById(R.id.item_photo_published);
@@ -37,20 +44,17 @@ public class PhotoViewHolder extends BaseViewHolder implements View.OnClickListe
     @Override
     public void onBind(Photo photo) {
         super.onBind(photo);
+        this.photo = photo;
 
-        RequestOptions options = new RequestOptions()
-                .placeholder(R.drawable.white_background)
-                .error(R.drawable.white_background);
-
-        Glide.with(itemView.getContext())
-                .setDefaultRequestOptions(options)
-                .load(format(photo.getMedia().getM()))
+        manager.load(format(photo.getMedia().getM()))
                 .into(image);
 
         formattingDate(photo);
 
         if (photo.getTitle() != null) this.title.setText(photo.getTitle());
         if (photo.getPublished() != null) this.published.setText(getFormattedDate());
+
+        preload.setView(image);
     }
 
 
@@ -79,6 +83,6 @@ public class PhotoViewHolder extends BaseViewHolder implements View.OnClickListe
 
     @Override
     public void onClick(View v) {
-        this.listener.onClick(getAdapterPosition());
+        this.listener.onClickPhoto(photo);
     }
 }

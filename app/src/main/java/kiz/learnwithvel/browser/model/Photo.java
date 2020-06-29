@@ -1,5 +1,8 @@
 package kiz.learnwithvel.browser.model;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import androidx.annotation.NonNull;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
@@ -8,8 +11,10 @@ import androidx.room.PrimaryKey;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import java.util.Objects;
+
 @Entity(tableName = "photos")
-public class Photo {
+public class Photo implements Parcelable {
 
     @PrimaryKey
     @NonNull
@@ -46,6 +51,44 @@ public class Photo {
     public Photo() {
         author_id = "";
     }
+
+    protected Photo(Parcel in) {
+        author_id = Objects.requireNonNull(in.readString());
+        title = in.readString();
+        link = in.readString();
+        published = in.readString();
+        description = in.readString();
+        tags = in.readString();
+        timestamp = in.readInt();
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(author_id);
+        dest.writeString(title);
+        dest.writeString(link);
+        dest.writeString(published);
+        dest.writeString(description);
+        dest.writeString(tags);
+        dest.writeInt(timestamp);
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    public static final Creator<Photo> CREATOR = new Creator<Photo>() {
+        @Override
+        public Photo createFromParcel(Parcel in) {
+            return new Photo(in);
+        }
+
+        @Override
+        public Photo[] newArray(int size) {
+            return new Photo[size];
+        }
+    };
 
     @NonNull
     @Override

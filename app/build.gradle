@@ -55,6 +55,7 @@ dependencies {
     def glideVersion = "4.11.0"
     def circleVersion = "3.1.0"
     def room_version = "2.2.5"
+    def lifecycle_version = "2.2.0"
 
     implementation fileTree(dir: "libs", include: ["*.jar"])
     implementation 'androidx.appcompat:appcompat:1.1.0'
@@ -66,6 +67,7 @@ dependencies {
     //retrofit
     implementation "com.squareup.retrofit2:retrofit:$retrofitVersion"
     implementation "com.squareup.retrofit2:converter-gson:$retrofitVersion"
+    implementation("com.squareup.okhttp3:okhttp:4.7.2")
 
     //google
     implementation "com.google.android.material:material:$googleVersion"
@@ -73,6 +75,10 @@ dependencies {
     //glide
     implementation "com.github.bumptech.glide:glide:$glideVersion"
     annotationProcessor "com.github.bumptech.glide:compiler:$glideVersion"
+    implementation ("com.github.bumptech.glide:recyclerview-integration:$glideVersion") {
+        // Excludes the support library because it's already included by Glide.
+        transitive = false
+    }
 
     //circle imageview
     implementation "de.hdodenhof:circleimageview:$circleVersion"
@@ -80,5 +86,11 @@ dependencies {
     //room
     implementation "androidx.room:room-runtime:$room_version"
     annotationProcessor "androidx.room:room-compiler:$room_version"
+
+
+    // ViewModel
+    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycle_version"
+    // LiveData
+    implementation "androidx.lifecycle:lifecycle-livedata-ktx:$lifecycle_version"
 
 }
