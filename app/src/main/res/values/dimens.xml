@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="image_item_width">140dp</dimen>
+    <dimen name="image_item_height">140dp</dimen>
+    <dimen name="recycler_loading_view_height">80dp</dimen>
+</resources>

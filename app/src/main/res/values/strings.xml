@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">Flickr Browser</string>
+
+    <string name="desc_photo_image">Photo Image</string>
+    <string name="item_published_label">Published:</string>
+    <string name="menu_category">Category</string>
+
+</resources>
