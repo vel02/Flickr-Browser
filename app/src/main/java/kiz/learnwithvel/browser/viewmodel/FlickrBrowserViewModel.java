@@ -44,6 +44,10 @@ public class FlickrBrowserViewModel extends AndroidViewModel {
         }
     }
 
+    public void setViewState(ViewState viewState) {
+        this.viewState.setValue(viewState);
+    }
+
     public LiveData<ViewState> getViewState() {
         return viewState;
     }
@@ -112,6 +116,10 @@ public class FlickrBrowserViewModel extends AndroidViewModel {
                         listResource.message));
             }
         }
+    }
+
+    public boolean allowBackNavigation() {
+        return viewState.getValue() == ViewState.CATEGORY;
     }
 
 

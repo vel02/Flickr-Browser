@@ -144,6 +144,7 @@ public class FlickrBrowserActivity extends BaseActivity implements OnPhotoClickL
     }
 
     private void displayCategory() {
+        mFlickrBrowserViewModel.setViewState(FlickrBrowserViewModel.ViewState.CATEGORY);
         mLayoutManager.scrollToPositionWithOffset(0, 0);
         mAdapter.displayCategory();
     }
@@ -200,7 +201,7 @@ public class FlickrBrowserActivity extends BaseActivity implements OnPhotoClickL
 
     @Override
     public void onBackPressed() {
-        if (mFlickrBrowserViewModel.getViewState().getValue() == FlickrBrowserViewModel.ViewState.CATEGORY)
+        if (mFlickrBrowserViewModel.allowBackNavigation())
             super.onBackPressed();
         else {
             mFlickrBrowserViewModel.cancelRequest();

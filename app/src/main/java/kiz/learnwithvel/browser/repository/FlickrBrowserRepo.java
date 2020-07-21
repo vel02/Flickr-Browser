@@ -72,17 +72,20 @@ public class FlickrBrowserRepo {
 
             @Override
             protected boolean shouldFetch(@Nullable List<Photo> data) {
-
+                int timeToday = (int) (System.currentTimeMillis() / 1000);
+                int lastFetched;
                 if (data != null) {
-                    if (data.size() == 0) return true;
+                    //check
                     for (Photo photo : data) {
-                        if ((photo.getTimestamp() - Constants.CURRENT_TIME_IN_SECONDS)
-                                >= Constants.PHOTO_REFRESH_TIME) {
+                        lastFetched = photo.getTimestamp();
+                        if ((timeToday - lastFetched) >= Constants.PHOTO_REFRESH_TIME)
                             return true;
+                        else {
+                            return (photo.getTimestamp() > data.size());
                         }
                     }
-                }
-                return false;
+                } else return true;
+                return true;
             }
 
             @NonNull
@@ -102,7 +105,7 @@ public class FlickrBrowserRepo {
 
     private void setTimestamp(List<Photo> photos) {
         for (Photo photo : photos) {
-            photo.setTimestamp(Constants.CURRENT_TIME_IN_SECONDS);
+            photo.setTimestamp((int) (System.currentTimeMillis() / 1000));
         }
     }
 
